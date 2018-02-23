@@ -16,25 +16,12 @@ class Reunion
     @activities.map(&:cost).reduce(:+)
   end
 
-  # def total_breakdown
-  #   total_breakdown = {}
-  #   @activities.map do |all_activities|
-  #     all_activities.owes.map do |activity|
-  #       total_breakdown.merge(activity)
-  #     end
-  #   end
-  # end
-
-  def breakdown_by_activity
-    @activities.map do |activity|
-      activity.owes
-    end.flatten
-  end
-
   def total_breakdown
-    total_breakdown = {}
-    breakdown_by_activity.map do |person|
-      total_breakdown.merge(person)
+    total_breakdown = Hash.new(0)
+    @activities.each do |activity|
+      activity.owes.each_pair do |key, value|
+        total_breakdown[key] += value
+      end
     end
     total_breakdown
   end

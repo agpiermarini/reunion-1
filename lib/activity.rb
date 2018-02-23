@@ -15,8 +15,10 @@ class Activity
   end
 
   def owes
-    @participants.map do |person|
-      {person[:name] => cost_per_person - person[:paid]}
+    each_owes = Hash.new(0)
+    @participants.each do |person|
+      each_owes[person[:name]] += (cost_per_person - person[:paid])
     end
+    each_owes
   end
 end
